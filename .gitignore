@@ -11,3 +11,13 @@ __pycache__/
 # Archivos del sistema operativo
 .DS_Store
 Thumbs.db
+
+# Video de prueba
+*.mp4
+
+#Archivos que se crean al correr
+
+*.png
+parpadeos_log.txt
+*.avi
+
