@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === CONFIGURACIÓN ===
-input_video_path = "ojo_test.mp4"
 output_video_path = "video_salida_area.avi"
 log_file_path = "parpadeos_log.txt"
 
@@ -14,15 +13,15 @@ max_area = 300000
 retencion_ojos_frames = 10
 suavizado_ventana = 5
 
-# === CARGA ===
 eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
-video = cv2.VideoCapture(input_video_path)
+video = cv2.VideoCapture(0)  # Usar la cámara en tiempo real
+
 if not video.isOpened():
-    raise Exception("❌ No se pudo abrir el video.")
+    raise Exception("❌ No se pudo acceder a la cámara.")
 
 frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = int(video.get(cv2.CAP_PROP_FPS))
+fps = int(video.get(cv2.CAP_PROP_FPS)) or 30
 out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc(*'XVID'), fps, (frame_width, frame_height))
 
 # === VARIABLES ===
