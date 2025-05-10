@@ -19,10 +19,18 @@ video = cv2.VideoCapture(0)  # Usar la cámara en tiempo real
 if not video.isOpened():
     raise Exception("❌ No se pudo acceder a la cámara.")
 
-frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = int(video.get(cv2.CAP_PROP_FPS)) or 30
-out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc(*'XVID'), fps, (frame_width, frame_height))
+# Validar tamaño del video
+frame_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)) or 640
+frame_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)) or 480
+
+# Validar FPS
+fps = video.get(cv2.CAP_PROP_FPS)
+if fps == 0 or fps is None or np.isnan(fps):
+    fps = 30  # FPS por defecto
+
+# Inicializar VideoWriter
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height))
 
 # === VARIABLES ===
 last_eye = None
